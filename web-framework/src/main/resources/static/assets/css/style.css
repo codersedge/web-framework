@@ -1,0 +1,168 @@
+/* style.css */
+
+html,
+body{
+	height: 100%;
+    /* Show it's not fixed to the top */
+  min-height: 50rem;
+  padding-top: 1.7rem;
+}
+
+
+/* main-menu */
+
+.navbar-dark .navbar-brand {
+    color: #e0e0e0;
+}
+
+.navbar-nav .nav-item:hover {
+    color: #fff;
+}
+
+
+/* side-menu */
+
+aside {
+    z-index: 4;
+    position: fixed;
+    width: 250px;
+    height: 100%;
+    background: #373a3c;
+    overflow: auto;
+/*    color: #b6bbca;*/
+/*    transition: all 0.2s ease;*/
+}
+
+#side-menu{
+    
+}
+
+#side-menu nav{
+    padding-top: 2rem;
+}
+
+#side-menu .search{
+    padding: 1rem;
+}
+
+#side-menu .search input[type="text"] {
+    color: whitesmoke;
+    background-color: #373a3c;
+    border: 0;
+}
+
+#side-menu .search .btn{
+    color: whitesmoke;
+    background-color: #373a3c;
+    border: 0;
+}
+#side-menu .search .btn:hover {
+    color: #5cb85c;
+    background-color: #373a3c;
+}
+#side-menu .search .btn:focus {
+    color: #5cb85c;
+    outline: none;
+}
+
+#side-menu-nav .card {
+    margin-bottom: 0;
+    background-color: inherit;
+    border-radius: 0;
+    border: 0;
+}
+
+#side-menu-nav .nav-link {
+    padding-left: 2rem;
+    color: #e0e0e0;
+    border-radius: 0;
+}
+#side-menu-nav .nav-link:hover {
+    color: #fafafa;
+    background-color: #292929;
+}
+#side-menu-nav .nav-link:focus {
+    color: #fafafa;
+    background-color: #292929;
+}
+#side-menu-nav .nav-link[aria-expanded="true"] {
+    color: #5cb85c;
+    background: linear-gradient(
+        90deg,
+        #5cb85c 5px,
+        #373a3c 5px
+    )
+}
+#side-menu-nav .nav-link[aria-expanded="true"]:hover {
+    color: #5cb85c;
+    background: linear-gradient(
+        90deg,
+        #5cb85c 5px,
+        #292929  5px
+    )
+}
+#side-menu-nav .nav-link[aria-expanded="true"]:focus {
+    color: #5cb85c;
+    background: linear-gradient(
+        90deg,
+        #5cb85c 5px,
+        #292929  5px
+    )
+}
+
+#side-menu-nav .nav-link.active {
+    background-color: #212121;
+}
+#side-menu-nav .nav-link.active:hover {
+    background-color: #212121;
+}
+
+#side-menu-nav .nav-link span{
+    padding-left: 1rem;
+}
+
+/* page */
+
+#page{
+    margin-left: 250px;
+    height: 100%;
+    padding: 2rem 1rem 2rem 1rem;
+    background-color: #fafafa;
+}
+
+#page header {
+    /* border-bottom: 2px solid #d9d9d9; */
+}
+
+.page-title {
+    font-size: 27px;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+}
+
+.breadcrumb {
+    padding: 0;
+    margin-bottom: 0.5rem;
+    background-color: transparent;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    font-family: FontAwesome;
+    content: "\f105";
+}
+
+
+/* dashboard */
+
+
+#dashboard .card-block.card-inverse {
+    color: white;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+}
+
+#dashboard .card-footer {
+    background-color: white;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+}
