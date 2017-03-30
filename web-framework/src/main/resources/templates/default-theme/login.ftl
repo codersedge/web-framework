@@ -1,42 +1,33 @@
-<#-- @ftlvariable name="_csrf" type="org.springframework.security.web.csrf.CsrfToken" -->
-<#-- @ftlvariable name="error" type="java.util.Optional<String>" -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Log in</title>
-</head>
-<body>
-<nav role="navigation">
-    <ul>
-        <li><a href="/">Home</a></li>
-    </ul>
-</nav>
+<#import "template.ftl" as template/>
+<@template.page title="Home Page">
 
-<h1>Log in</h1>
+	<p>You can use: demo@localhost / demo</p>
+	
+	<div class="container">
 
-<p>You can use: demo@localhost / demo</p>
+      <form class="form-signin" role="form" action="/login" method="post">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <label for="email" class="sr-only">Email address</label>
+        <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required autofocus>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="remember-me" id="remember-me" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
 
-<form role="form" action="/login" method="post">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </div> <!-- /container -->
+	
+	<#if error.isPresent()>
+	<p>The email or password you have entered is invalid, try again.</p>
+	</#if>
 
-    <div>
-        <label for="email">Email address</label>
-        <input type="email" name="email" id="email" required autofocus/>
-    </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required/>
-    </div>
-    <div>
-        <label for="remember-me">Remember me</label>
-        <input type="checkbox" name="remember-me" id="remember-me"/>
-    </div>
-    <button type="submit">Sign in</button>
-</form>
+</@template.page>
 
-<#if error.isPresent()>
-<p>The email or password you have entered is invalid, try again.</p>
-</#if>
-</body>
-</html>
+
+
+

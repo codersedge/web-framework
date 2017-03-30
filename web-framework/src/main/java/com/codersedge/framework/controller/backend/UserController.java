@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.codersedge.framework.dto.CurrentUser;
 import com.codersedge.framework.dto.UserCreateForm;
+import com.codersedge.framework.dto.UserUpdateForm;
 import com.codersedge.framework.service.UserService;
 import com.codersedge.framework.validator.UserCreateFormValidator;
 
@@ -54,7 +55,7 @@ public class UserController {
     }
 
     @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #id)")
-    @RequestMapping("/user/{id}")
+    @RequestMapping("/{id}")
     public ModelAndView getUserPage(@PathVariable Long id) {
         return new ModelAndView("user", "user", userService.getUserById(id)
                 .orElseThrow(() -> new NoSuchElementException(String.format("User=%s not found", id))));
@@ -77,6 +78,27 @@ public class UserController {
         } catch (DataIntegrityViolationException e) {
             bindingResult.reject("email.exists", "Email already exists");
             return "backend/user/create";
+        }
+        return "redirect:/backend/user";
+    }
+    
+    @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #id)")
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.GET)
+    public ModelAndView getUserUpdatePage(@PathVariable Long id) {
+        return new ModelAndView("backend/user/update", "form", new UserUpdateForm(userService.getUserById(id).get()));
+    }
+    
+    @PreAuthorize("@currentUserServiceImpl.canAccessUser(principal, #id)")
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
+    public String handleUserUpdateForm(@Valid @ModelAttribute("form") UserUpdateForm form, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "backend/user/update";
+        }
+        try {
+            userService.update(form);
+        } catch (DataIntegrityViolationException e) {
+            bindingResult.reject("email.exists", "Email already exists");
+            return "backend/user/update";
         }
         return "redirect:/backend/user";
     }

@@ -5,10 +5,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.codersedge.framework.dto.CurrentUser;
 import com.codersedge.framework.dto.UserCreateForm;
+import com.codersedge.framework.dto.UserUpdateForm;
 import com.codersedge.framework.model.User;
 import com.codersedge.framework.repository.UserRepository;
 
@@ -16,10 +19,12 @@ import com.codersedge.framework.repository.UserRepository;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private Authentication authentication;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, Authentication authentication) {
         this.userRepository = userRepository;
+        this.authentication = authentication;
     }
 
     @Override
@@ -45,5 +50,26 @@ public class UserServiceImpl implements UserService {
         user.setRole(form.getRole());
         return userRepository.save(user);
     }
+
+	@Override
+	public User update(UserUpdateForm form) {
+		User user = userRepository.findOne(form.getId());
+		if(!user.getEmail().equalsIgnoreCase(form.getEmail())) {
+			user.setEmail(form.getEmail());
+		}
+		if(!form.getPassword().isEmpty()) {
+			user.setPasswordHash(new BCryptPasswordEncoder().encode(form.getPassword()));
+		}
+		if(!user.getRole().equals(form.getRole()) && ((CurrentUser) authentication.getPrincipal()).getRole().equals("ADMIN")) {
+			user.setRole(form.getRole());
+		}
+		return userRepository.save(user);
+		
+	}
+
+	@Override
+	public void delete(long id) {
+		userRepository.delete(id);
+	}
 
 }

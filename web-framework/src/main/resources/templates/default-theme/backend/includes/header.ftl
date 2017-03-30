@@ -1,17 +1,13 @@
 <#macro page title>
 <#-- @ftlvariable name="_csrf" type="org.springframework.security.web.csrf.CsrfToken" -->
 <#-- @ftlvariable name="currentUser" type="eu.kielczewski.example.domain.CurrentUser" -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>${title?html}</title>
-</head>
-<body>
+
 <!-- header section -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>${title?html}</title>
+    
     <!-- Required meta tags always come first -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
