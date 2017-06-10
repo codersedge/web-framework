@@ -40,6 +40,7 @@
                             <span>Coupons</span></a>
                         </div>
                     </div>
+                    <#if currentUser?? && currentUser.role == "ADMIN">
                     <div class="card">
                         <a class="nav-link" data-toggle="collapse" data-parent="#side-menu-nav-accordion" href="#collapseUsers" aria-expanded="false">
                         <i class="fa fa-users" aria-hidden="true"></i><span>Users</span></a>
@@ -51,6 +52,7 @@
                             <span>User black list</span></a>
                         </div>
                     </div>
+                    </#if>
                     <div class="card">
                         <a class="nav-link" data-toggle="collapse" data-parent="#side-menu-nav-accordion" href="#collapseContents" aria-expanded="false">
                         <i class="fa fa-file-text" aria-hidden="true"></i><span>Contents</span></a>

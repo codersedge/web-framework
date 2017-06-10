@@ -9,10 +9,10 @@ import com.codersedge.framework.model.User;
 
 @Service
 public class CurrentUserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
-    private final UserService userService;
+    private final IUserService userService;
 
     @Autowired
-    public CurrentUserDetailsService(UserService userService) {
+    public CurrentUserDetailsService(IUserService userService) {
         this.userService = userService;
     }
 

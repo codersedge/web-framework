@@ -6,15 +6,15 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.codersedge.framework.dto.UserCreateForm;
-import com.codersedge.framework.service.UserService;
+import com.codersedge.framework.service.IUserService;
 
 @Component
 public class UserCreateFormValidator implements Validator {
 
-    private final UserService userService;
+    private final IUserService userService;
 
     @Autowired
-    public UserCreateFormValidator(UserService userService) {
+    public UserCreateFormValidator(IUserService userService) {
         this.userService = userService;
     }
 

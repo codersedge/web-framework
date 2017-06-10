@@ -5,17 +5,15 @@
     <header class="clearfix">
     	<h1 class="page-title float-xs-left">Users</h1>
     	<a class="btn btn-outline-primary btn-sm" href="/backend/user/create" role="button">Add New</a>
-        <form class="form-inline float-xs-right">
-            <input class="form-control form-control-sm" type="text" placeholder="Search">
-            <div class="btn-group">
-                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Filter
-                </button>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <button class="dropdown-item" type="button">Email</button>
-                    <button class="dropdown-item" type="button">Role</button>
-                </div>
-            </div>
+        <form class="form-inline float-xs-right" action="#">
+            <div class="input-group">
+		      <input type="text" class="form-control form-control-sm" placeholder="Search for...">
+		      <span class="input-group-btn">
+		        <button class="btn btn-secondary btn-sm" type="submit">
+		        	<i class="fa fa-search" aria-hidden="true"></i>
+		        </button>
+		      </span>
+		    </div>
         </form>
     </header>
     
@@ -27,9 +25,11 @@
                         <li class="nav-item">
                             <a class="nav-link active" href="#">All users</a>
                         </li>
+                        <#list roles as role>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Administrator</a>
+                            <a class="nav-link" href="#">${role}</a>
                         </li>
+                        </#list>
                     </ul>
                 </div>
                 <div class="card-block">
@@ -47,7 +47,7 @@
                             <th class="hidden-sm hidden-xs">Email</th>
                             <th class="hidden-sm hidden-xs">Role</th>
                             <th class="hidden-xs">Status</th>
-                            <th class="hidden-sm hidden-xs">Created</th>
+                            <th class="hidden-sm hidden-xs">Option</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -64,7 +64,21 @@
                             <td><a href="/backend/user/${user.id}">${user.email}</a></td>
                             <td class="hidden-sm hidden-xs">${user.role}</td>
                             <td class="hidden-xs">Active</td>
-                            <td class="hidden-sm hidden-xs">15-10-16</td>
+                            <td class="hidden-sm hidden-xs">
+                            	<a class="btn btn-default btn-sm float-xs-left" href="/backend/user/${user.id}" role="button">
+                            		<i class="fa fa-eye" aria-hidden="true"></i>
+                            	</a>
+                            	<a class="btn btn-default btn-sm float-xs-left" href="/backend/user/${user.id}/update" role="button">
+                            		<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            	</a>
+                            	<form class="form-inline float-xs-left" role="form" action="/backend/user/${user.id}/delete" method="post">
+						            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						            <button type="submit" class="btn btn-outline-danger btn-sm">
+						            	<i class="fa fa-trash-o" aria-hidden="true"></i>
+						            </button>
+						        </form>
+                            	
+                            </td>
                         </tr>
                         </#list>
                         </tbody>

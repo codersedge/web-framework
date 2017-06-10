@@ -5,18 +5,22 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import com.codersedge.framework.dto.CurrentUser;
 import com.codersedge.framework.dto.UserCreateForm;
 import com.codersedge.framework.dto.UserUpdateForm;
-import com.codersedge.framework.service.UserService;
+import com.codersedge.framework.security.AuthenticationFacade;
+import com.codersedge.framework.service.IUserService;
 
 @Component
 public class UserUpdateFormValidator implements Validator {
 
-    private final UserService userService;
+    private final IUserService userService;
+    private AuthenticationFacade authenticationFacade;
 
     @Autowired
-    public UserUpdateFormValidator(UserService userService) {
+    public UserUpdateFormValidator(IUserService userService, AuthenticationFacade authenticationFacade) {
         this.userService = userService;
+        this.authenticationFacade = authenticationFacade;
     }
 
     @Override
@@ -38,7 +42,8 @@ public class UserUpdateFormValidator implements Validator {
     }
 
     private void validateEmail(Errors errors, UserUpdateForm form) {
-        if (userService.getUserByEmail(form.getEmail()).isPresent()) {
+        if (!((CurrentUser) authenticationFacade.getAuthentication().getPrincipal()).getUsername().equalsIgnoreCase(form.getEmail())
+        		&& userService.getUserByEmail(form.getEmail()).isPresent()) {
             errors.reject("email.exists", "User with this email already exists");
         }
     }

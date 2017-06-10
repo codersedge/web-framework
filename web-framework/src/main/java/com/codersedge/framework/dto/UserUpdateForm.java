@@ -21,6 +21,9 @@ public class UserUpdateForm {
 
     @NotNull
     private Role role = Role.USER;
+    
+    public UserUpdateForm() {
+	}
 
 	public UserUpdateForm(User user) {
 		this.id = user.getId();
@@ -30,6 +33,10 @@ public class UserUpdateForm {
 
 	public long getId() {
 		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getEmail() {

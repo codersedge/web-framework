@@ -13,34 +13,36 @@
     <div class="form-group row">
         <label for="email" class="col-md-2 col-form-label">Email address</label>
         <div class="col-md-10">
-        	<input class="form-control" type="email" name="email" id="email" value="${form.email}" required autofocus/>
+        	<input class="form-control" type="email" name="email" id="email" value="${userUpdateForm.email}" required autofocus/>
     	</div>
     </div>
     <div class="form-group row">
         <label for="password" class="col-md-2 col-form-label">Password</label>
         <div class="col-md-10">
-        	<input class="form-control" type="password" name="password" id="password" required/>
+        	<input class="form-control" type="password" name="password" id="password"/>
     	</div>
     </div>
     <div class="form-group row">
         <label for="passwordRepeated" class="col-md-2 col-form-label">Repeat</label>
         <div class="col-md-10">
-        	<input class="form-control" type="password" name="passwordRepeated" id="passwordRepeated" required/>
+        	<input class="form-control" type="password" name="passwordRepeated" id="passwordRepeated"/>
     	</div>
     </div>
     <div class="form-group row">
         <label for="role" class="col-md-2 col-form-label">Role</label>
         <div class="col-md-10">
 	        <select class="form-control" name="role" id="role" required>
-	            <option <#if form.role == 'USER'>selected</#if>>USER</option>
-	            <option <#if form.role == 'ADMIN'>selected</#if>>ADMIN</option>
+	            <#list roles as role>
+		            <option <#if userUpdateForm.role == role>selected</#if>>${role}</option>
+				</#list>
 	        </select>
         </div>
     </div>
     <button class="btn btn-primary type="submit">Save</button>
+    <a class="btn btn-secondary" href="/backend/user" role="button">Cancel</a>
 </form>
 
-<@spring.bind "form" />
+<@spring.bind "userUpdateForm" />
 <#if spring.status.error>
 <ul>
     <#list spring.status.errorMessages as error>

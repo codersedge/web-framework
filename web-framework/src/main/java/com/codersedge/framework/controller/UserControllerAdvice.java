@@ -7,16 +7,22 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.codersedge.framework.dto.CurrentUser;
+import com.codersedge.framework.model.Role;
 
 
 @ControllerAdvice
-public class CurrentUserControllerAdvice {
+public class UserControllerAdvice {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CurrentUserControllerAdvice.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserControllerAdvice.class);
 
     @ModelAttribute("currentUser")
     public CurrentUser getCurrentUser(Authentication authentication) {
         return (authentication == null) ? null : (CurrentUser) authentication.getPrincipal();
+    }
+    
+    @ModelAttribute("roles")
+    public Role[] getRoles() {
+        return Role.values();
     }
 
 
