@@ -10,8 +10,9 @@ public class CurrentUserService implements ICurrentUserService {
 
     @Override
     public boolean canAccessUser(CurrentUser currentUser, Long userId) {
-        return currentUser != null
-                && (currentUser.getRole() == Role.ADMIN || currentUser.getId().equals(userId));
+    	return true;
+//        return currentUser != null
+//                && (currentUser.getRole() == Role.ADMIN || currentUser.getId().equals(userId));
     }
 
 }

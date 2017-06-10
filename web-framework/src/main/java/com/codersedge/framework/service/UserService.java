@@ -1,5 +1,6 @@
 package com.codersedge.framework.service;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import com.codersedge.framework.dto.CurrentUser;
 import com.codersedge.framework.dto.UserCreateForm;
 import com.codersedge.framework.dto.UserUpdateForm;
 import com.codersedge.framework.model.User;
+import com.codersedge.framework.repository.RoleRepository;
 import com.codersedge.framework.repository.UserRepository;
 import com.codersedge.framework.security.AuthenticationFacade;
 
@@ -20,12 +22,14 @@ import com.codersedge.framework.security.AuthenticationFacade;
 public class UserService implements IUserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private Authentication authentication;
 
     @Autowired
-    public UserService(UserRepository userRepository, AuthenticationFacade authenticationFacade) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, AuthenticationFacade authenticationFacade) {
         this.userRepository = userRepository;
         this.authentication = authenticationFacade.getAuthentication();
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -48,7 +52,7 @@ public class UserService implements IUserService {
         User user = new User();
         user.setEmail(form.getEmail());
         user.setPasswordHash(new BCryptPasswordEncoder().encode(form.getPassword()));
-        user.setRole(form.getRole());
+        user.setRoles(Arrays.asList(roleRepository.findByName(form.getRole())));
         return userRepository.save(user);
     }
 
@@ -61,9 +65,9 @@ public class UserService implements IUserService {
 		if(!form.getPassword().isEmpty()) {
 			user.setPasswordHash(new BCryptPasswordEncoder().encode(form.getPassword()));
 		}
-		if(!user.getRole().equals(form.getRole()) && ((CurrentUser) authentication.getPrincipal()).getRole().equals("ADMIN")) {
-			user.setRole(form.getRole());
-		}
+//		if(!user.getRole().equals(form.getRole()) && ((CurrentUser) authentication.getPrincipal()).getRole().equals("ADMIN")) {
+//			user.setRoles(form.getRole());
+//		}
 		return userRepository.save(user);
 		
 	}

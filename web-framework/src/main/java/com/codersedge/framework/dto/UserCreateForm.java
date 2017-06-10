@@ -18,7 +18,7 @@ public class UserCreateForm {
     private String passwordRepeated = "";
 
     @NotNull
-    private Role role = Role.USER;
+    private String role = "ROLE_USER";
 
 	public String getEmail() {
 		return email;
@@ -44,11 +44,11 @@ public class UserCreateForm {
 		this.passwordRepeated = passwordRepeated;
 	}
 
-	public Role getRole() {
+	public String getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
 	}
 

@@ -1,29 +1,33 @@
 package com.codersedge.framework.dto;
 
-import org.springframework.security.core.authority.AuthorityUtils;
+import java.util.Collection;
 
-import com.codersedge.framework.model.Role;
+import org.springframework.security.core.GrantedAuthority;
+
 import com.codersedge.framework.model.User;
 
 public class CurrentUser extends org.springframework.security.core.userdetails.User {
 
-    private User user;
+	private User user;
+	private Collection<? extends GrantedAuthority> authorities;
 
-    public CurrentUser(User user) {
-        super(user.getEmail(), user.getPasswordHash(), AuthorityUtils.createAuthorityList(user.getRole().toString()));
-        this.user = user;
-    }
+	public CurrentUser(User user, Collection<? extends GrantedAuthority> authorities) {
+		super(user.getEmail(), user.getPasswordHash(), user.isEnabled(), true, true, true, authorities);
+		this.user = user;
+		this.authorities = authorities;
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public Long getId() {
-        return user.getId();
-    }
+	public Long getId() {
+		return user.getId();
+	}
 
-    public Role getRole() {
-        return user.getRole();
-    }
+	@SuppressWarnings("unchecked")
+	public Collection<GrantedAuthority> getAuthorities() {
+		return (Collection<GrantedAuthority>) authorities;
+	}
 
 }

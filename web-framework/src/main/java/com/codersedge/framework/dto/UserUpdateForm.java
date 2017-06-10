@@ -1,5 +1,7 @@
 package com.codersedge.framework.dto;
 
+import java.util.Collection;
+
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -20,7 +22,7 @@ public class UserUpdateForm {
     private String passwordRepeated = "";
 
     @NotNull
-    private Role role = Role.USER;
+    private Collection<Role> role;
     
     public UserUpdateForm() {
 	}
@@ -28,7 +30,7 @@ public class UserUpdateForm {
 	public UserUpdateForm(User user) {
 		this.id = user.getId();
 		this.email = user.getEmail();
-		this.role = user.getRole();
+		this.role = user.getRoles();
 	}
 
 	public long getId() {
@@ -63,12 +65,12 @@ public class UserUpdateForm {
 		this.passwordRepeated = passwordRepeated;
 	}
 
-	public Role getRole() {
+	public Collection<Role> getRole() {
 		return role;
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public void setRole(Role role) {
+	public void setRole(Collection<Role> role) {
 		this.role = role;
 	}
 
